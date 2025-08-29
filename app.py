@@ -1,35 +1,33 @@
 import streamlit as st
 
 # 앱 제목
-st.title("📱 간단 계산기")
+st.title("🧮 BMI 계산기 (Streamlit)")
 
-# 사용자 입력 안내
-st.write("두 숫자를 입력하고 원하는 연산을 선택하세요.")
+# 사용자 입력: 키(cm)와 몸무게(kg)
+height_cm = st.number_input("키를 입력하세요 (cm):", min_value=0.0, format="%.1f")
+weight_kg = st.number_input("몸무게를 입력하세요 (kg):", min_value=0.0, format="%.1f")
 
-# 숫자 입력
-num1 = st.number_input("첫 번째 숫자", value=0.0, format="%.2f")
-num2 = st.number_input("두 번째 숫자", value=0.0, format="%.2f")
+# BMI 계산 버튼
+if st.button("BMI 계산하기"):
+    if height_cm > 0:
+        height_m = height_cm / 100
+        bmi = weight_kg / (height_m ** 2)
+        bmi_rounded = round(bmi, 2)
 
-# 연산 선택
-operation = st.selectbox(
-    "연산 선택",
-    ["더하기 (+)", "빼기 (-)", "곱하기 (×)", "나누기 (÷)"]
-)
-
-# 계산 수행
-result = None
-if st.button("계산하기"):
-    if operation == "더하기 (+)":
-        result = num1 + num2
-    elif operation == "빼기 (-)":
-        result = num1 - num2
-    elif operation == "곱하기 (×)":
-        result = num1 * num2
-    elif operation == "나누기 (÷)":
-        if num2 != 0:
-            result = num1 / num2
+        # BMI 분류 기준
+        if bmi < 18.5:
+            category = "저 체 중"
+        elif 18.5 <= bmi <= 22.9:
+            category = "정 상"
+        elif 23 <= bmi <= 24.9:
+            category = "비만전단계"
+        elif 25 <= bmi <= 29.9:
+            category = "1단계 비만"
+        elif 30 <= bmi <= 34.9:
+            category = "2단계 비만"
         else:
-            st.error("0으로는 나눌 수 없습니다!")
+            category = "3단계 비만"
 
-    if result is not None:
-        st.success(f"결과: {result}")
+        st.success(f"당신의 BMI는 {bmi_rounded}입니다. ({category})")
+    else:
+        st.error("키를 올바르게 입력해주세요.")
