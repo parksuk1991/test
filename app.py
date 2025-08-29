@@ -1,7 +1,19 @@
 import streamlit as st
 
 # 앱 제목
-st.title("🧮 BMI 계산기 (Streamlit)")
+st.title("🧮 BMI 계산기")
+
+# BMI 분류표 표시
+st.markdown("""
+| 분류         | 체질량지수(kg/m²)         |
+|--------------|--------------------------|
+| 저 체 중     | 18.5 미만                |
+| 정상         | 18.5 이상 ~ 22.9 이하    |
+| 비만전단계   | 23 이상 ~ 24.9 이하      |
+| 1단계 비만   | 25 이상 ~ 29.9 이하      |
+| 2단계 비만   | 30 이상 ~ 34.9 이하      |
+| 3단계 비만   | 35 이상                  |
+""")
 
 # 사용자 입력: 키(cm)와 몸무게(kg)
 height_cm = st.number_input("키를 입력하세요 (cm):", min_value=0.0, format="%.1f")
@@ -16,11 +28,11 @@ if st.button("BMI 계산하기"):
 
         # BMI 분류 기준
         if bmi < 18.5:
-            category = "저 체 중"
+            category = "저체중"
         elif 18.5 <= bmi <= 22.9:
-            category = "정 상"
+            category = "정상"
         elif 23 <= bmi <= 24.9:
-            category = "비만전단계"
+            category = "비만 전단계"
         elif 25 <= bmi <= 29.9:
             category = "1단계 비만"
         elif 30 <= bmi <= 34.9:
